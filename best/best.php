@@ -38,7 +38,9 @@ add_action( 'init', 'create_block_best_block_init' );
  * Function that initializes the plugin.
  */
 function norrenberger_get_stocks_data() { 
-	
+	?>
+        <h1>Hello World<h1>
+    <?php
 }
 
 
@@ -56,14 +58,17 @@ function norrenberger_register_custom_menu_page() {
 		16
 	);
 	
-    //adding a submenu called API Settings
-	add_submenu_page( 
-        'norrenberger', 
-        'api keys', 
-        'API Settings', 
-        'manage_options', 
-        'api_creds', 
-        'norrenberger_api_creds'
-    ); 
+    // //adding a submenu called API Settings
+	// add_submenu_page( 
+    //     'norrenberger', 
+    //     'api keys', 
+    //     'API Settings', 
+    //     'manage_options', 
+    //     'api_creds', 
+    //     'norrenberger_api_creds'
+    // ); 
 
 }
+
+
+add_action( 'admin_menu', 'norrenberger_register_custom_menu_page' );
