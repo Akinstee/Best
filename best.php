@@ -38,8 +38,50 @@ add_action( 'init', 'create_block_best_block_init' );
  * Function that initializes the plugin.
  */
 function best_get_stocks_data() { 
+    $url = 'http://ffpro.norrenberger.com/WebResourcesAPI/api/GetFundPrices?lastUpdatedDate=2022-12-30&fundId=72';
+    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $args = array(
+        'headers' => array(
+            'Authorization' => 'Bearer ' .$id_token,
+        )
+    );
+    $response = wp_remote_get( $url, $args );
+    $body     = wp_remote_retrieve_body( $response )
 	?>
         <h1>Hello World<h1>
+        <table id="table" width="100%">
+          <thead>
+            <tr role="row">
+              <th>ID</th>
+              <th>SchemeId</th>
+              <th>ReportDate</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+        
+        </tbody>
+        </table>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+        <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+            var fed = <? echo $body ?>;
+            var abc = new Request('<? $body ?>');
+            
+        jQuery(document).ready(function($){
+            console.log(fed.data);
+                $('#table').DataTable({
+                data: fed.data,
+                    columns: [
+                    { data: 'Id' },
+                    { data: 'SchemeId' },
+                    { data: 'ReportDate' },
+                    { data: 'Value' },
+                    
+                    ]
+            });
+        });
+        </script>
     <?php
 }
 
@@ -54,7 +96,7 @@ function best_register_custom_menu_page() {
 		'manage_options',
 		'best',
         'best_get_stocks_data',
-        'dashicons-testimonial',
+        'dashicons-chart-bar',
 		16
 	);
 	
