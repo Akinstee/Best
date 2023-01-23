@@ -85,6 +85,7 @@ function best_get_stocks_data() {
     <?php
 }
 
+add_shortcode('Best', 'best_get_stocks_data');
 
 /**
  * Register a custom menu page to view the information queried.
