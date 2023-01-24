@@ -40,7 +40,7 @@ function norrenberger_fund_1 () {
 		<table id="fund-1-table" width="100%">
   <thead>
     <tr role="row">
-        <th>ID</th>
+        <th>Id</th>
         <th>SchemeId</th>
         <th>ReportDate</th>
         <th>Value</th>
