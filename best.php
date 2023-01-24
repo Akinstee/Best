@@ -36,20 +36,20 @@ add_shortcode('Best', 'norrenberger_fund_1');
 
 function norrenberger_fund_1 () {
     ?>
-        <div class="display" >
-		<table id="fund-1-table" width="100%">
-  <thead>
-    <tr role="row">
-        <th>Id</th>
-        <th>SchemeId</th>
-        <th>ReportDate</th>
-        <th>Value</th>
-    </tr>
-
-  </thead>
- 
-</table>
-</div>
+        <div class="" >
+            <table id="fund_table" width="100%">
+                <thead>
+                    <tr role="row">
+                    <th>ID</th>
+                    <th>SchemeId</th>
+                    <th>ReportDate</th>
+                    <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     <?php
     // Write AJAX to show the infomation in the shortcode.
     wp_enqueue_script( 'best-ajax-scripts', plugins_url( 'assets/js/best-ajax.js', __FILE__ ), ['jquery'], '0.1.0', true );
@@ -75,7 +75,7 @@ function best_rest_ajax_endpoint() {
 
 // REST Endpoint information.
 function best_rest_ajax_callback() {
-
+    $todays_date = date("Y-m-d");
     $url = 'http://ffpro.norrenberger.com/WebResourcesAPI/api/GetFundPrices?lastUpdatedDate=2022-10-21&fundId=73';
     $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
     $args = array(
@@ -85,9 +85,9 @@ function best_rest_ajax_callback() {
     );
     $response = wp_remote_get( $url, $args );
     $body     = wp_remote_retrieve_body( $response );
-    $Wot = $body;
+    $encoded_data = json_decode($body);
 
-return $body;
+return $encoded_data;
 
 }
 
@@ -105,9 +105,10 @@ function best_get_stocks_data() {
         )
     );
     $response = wp_remote_get( $url, $args );
-    $body     = wp_remote_retrieve_body( $response )
+    $body     = wp_remote_retrieve_body( $response );
+    $t_date = date("Y-m-d");
 	?>
-        <h1 style="padding: 10px">Structure of Fund 3 Investment Portfolio<h1>
+        <h1 style="padding: 10px">Structure of Fund 3 Investment Portfolio For <?php echo "" .  $t_date  ?><h1>
         <table id="table" width="100%">
           <thead>
             <tr role="row">
@@ -181,10 +182,10 @@ add_action( 'admin_menu', 'best_register_custom_menu_page' );
 add_action( 'wp_enqueue_scripts', 'wpdocs_my_enqueue_scripts' );
 function wpdocs_my_enqueue_scripts() : void {
     // Enqueue my styles.
-    wp_enqueue_style( 'datatables-style', 'https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css' );
+    wp_enqueue_style( 'datatables-style', 'https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css' );
      
     // Enqueue my scripts.
-    wp_enqueue_script( 'datatables', 'https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js', ['jquery'], null, true );
+    wp_enqueue_script( 'datatables', 'https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js', ['jquery'], null, true );
      wp_localize_script( 'datatables', 'datatablesajax', array('url' => admin_url('admin-ajax.php')) );
 
 }
