@@ -1,7 +1,6 @@
 jQuery(document).ready(function($){
-	$('#fund_table').DataTable({
+	$('#Investment_table').DataTable({
 		"processing":true,
-       //"serverSide":true,
 		ajax: {
             url: '/wp-json/best2/rest-ajax', 
             dataSrc:''

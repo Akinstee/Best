@@ -192,9 +192,9 @@ function wpdocs_my_enqueue_scripts() : void {
 
 
 
-add_shortcode('Best', 'norrenberger_investment_1');
+add_shortcode('Best', 'norrenberger_investment_2');
 
-function norrenberger_investment_1 () {
+function norrenberger_investment_2 () {
     ?>
         <div class="" >
             <table id="Investment_table" width="100%">
@@ -228,7 +228,7 @@ function best2_rest_ajax_endpoint() {
         [
             'methods'             => 'GET',
             'permission_callback' => '__return_true',
-            'callback'            => 'best_rest_ajax_callback',
+            'callback'            => 'best2_rest_ajax_callback',
         ]
     );
 }
