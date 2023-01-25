@@ -237,7 +237,7 @@ function best2_rest_ajax_endpoint() {
 // REST Endpoint information.
 function best2_rest_ajax_callback() {
     $todays_date = date("Y-m-d");
-    $url = 'http://ffpro.norrenberger.com/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate';
+    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
     $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
     $args = array(
         'headers' => array(
@@ -258,7 +258,7 @@ return $encoded_data;
  * Function that initializes the plugin.
  */
 function best_get_stocks_data() { 
-    $url = 'http://ffpro.norrenberger.com/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate';
+    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
     $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
     $args = array(
         'headers' => array(
