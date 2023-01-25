@@ -189,3 +189,65 @@ function wpdocs_my_enqueue_scripts() : void {
      wp_localize_script( 'datatables', 'datatablesajax', array('url' => admin_url('admin-ajax.php')) );
 
 }
+
+
+
+add_shortcode('Best', 'norrenberger_investment_2');
+
+function norrenberger_investment_2 () {
+    ?>
+        <div class="" >
+            <table id="Investment_table" width="100%">
+                <thead>
+                    <tr role="row">
+                    <th>EQUITIES</th>
+                    <th>INFRASTRUCTURE FUNDS</th>
+		    <th>TOTAL FGN SECURITIES</th>
+                    <th>MONEY MARKET</th>
+                    <th>UNINVESTED CASH</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    <?php
+    // Write AJAX to show the infomation in the shortcode.
+    wp_enqueue_script( 'best2-ajax-scripts', plugins_url( 'assets/js/best2-ajax.js', __FILE__ ), ['jquery'], '0.1.0', true );
+    
+}
+
+
+// Create new endpoint to provide data.
+add_action( 'rest_api_init', 'best2_rest_ajax_endpoint' );
+
+function best2_rest_ajax_endpoint() {
+    register_rest_route(
+        'best2',
+        'rest-ajax',
+        [
+            'methods'             => 'GET',
+            'permission_callback' => '__return_true',
+            'callback'            => 'best2_rest_ajax_callback',
+        ]
+    );
+}
+
+
+// REST Endpoint information.
+function best2_rest_ajax_callback() {
+    $todays_date = date("Y-m-d");
+    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
+    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $args = array(
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $id_token,
+        )
+    );
+    $response = wp_remote_get( $url, $args );
+    $body     = wp_remote_retrieve_body( $response );
+    $encoded_data = json_decode($body);
+
+return $encoded_data;
+
+}
