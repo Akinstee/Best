@@ -4,7 +4,7 @@
  * Description:       This plugin helps display all the investment stocks information the on pages via shortcode.
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.1.0
+ * Version:           0.1.1
  * Author:            @Akinstee @kingdanie
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,7 @@ return $encoded_data;
 
 
 
+
 /**
  * Function that initializes the plugin.
  */
@@ -112,10 +113,10 @@ function best_get_stocks_data() {
         <table id="table" width="100%">
           <thead>
             <tr role="row">
-              <th>ID</th>
-              <th>SchemeId</th>
-              <th>ReportDate</th>
-              <th>Value</th>
+              <th>Id</th>
+              <th>Date</th>
+              <th>Fund Name</th>
+              <th>Rate</th>
             </tr>
           </thead>
           <tbody>
@@ -124,6 +125,10 @@ function best_get_stocks_data() {
         </table>
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
         <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <style>
+            table.dataTable thead th {text-align: start; padding: 10px}
+            h1 { font-size: 1.2em;}
+        </style>
         <script type="text/javascript">
             var investment_data = <? echo $body ?>;
             var abc = new Request('<? $body ?>');
@@ -134,8 +139,8 @@ function best_get_stocks_data() {
                 data: investment_data,
                     columns: [
                     { data: 'Id' },
-                    { data: 'SchemeId' },
                     { data: 'ReportDate' },
+                    { data: 'SchemeId' },
                     { data: 'Value' },
                     
                     ]
@@ -145,6 +150,122 @@ function best_get_stocks_data() {
     <?php
 }
 
+
+function get_fund_valuations() { 
+    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
+    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $args = array(
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $id_token,
+        )
+    );
+    $response = wp_remote_get( $url, $args );
+    $body     = wp_remote_retrieve_body( $response );
+    $t_date = date("Y-m-d");
+	?>
+        <h1 style="padding: 10px">All Investment Funds Valuation <?php echo "(" .  $t_date . ")"  ?><h1>
+        <table id="table-valuation" width="100%">
+          <thead>
+            <tr role="row">
+                <th>Report Date</th>
+                <th>Equities ( Fund 1 )</th>
+                <th>InfrastructureFunds ( Fund 1 )</th>
+                <th>MoneyMarket ( Fund 1 )</th>
+                <th>StateGovBonds ( Fund 1 )</th>
+                <th>TotalFGNSecurities ( Fund 1 )</th>
+                <th>UnInvestedCash ( Fund 1 )</th>
+                <th>CorporateBonds ( Fund 2 )</th>
+                <th>Equities ( Fund 2 )</th>
+                <th>InfrastructureBonds ( Fund 2 )</th>
+                <th>InfrastructureFunds ( Fund 2 )</th>
+                <th>MoneyMarket ( Fund 2 )</th>
+                <th>StateGovBonds ( Fund 2 )</th>
+                <th>TotalFGNSecurities ( Fund 2 )</th>
+                <th>UnInvestedCash ( Fund 2 )</th>
+                <th>CorporateBonds ( Fund 3 )</th>
+                <th>Equities ( Fund 3 )</th>
+                <th>InfrastructureBonds ( Fund 3 )</th>
+                <th>MoneyMarket ( Fund 3 )</th>
+                <th>StateGovBonds ( Fund 3 )</th>
+                <th>TotalFGNSecurities ( Fund 3 )</th>
+                <th>UnInvestedCash ( Fund 3 )</th>
+                <th>CorporateBonds ( Fund 4 )</th>
+                <th>Equities ( Fund 4 )</th>
+                <th>MoneyMarket ( Fund 4 )</th>
+                <th>StateGovBonds ( Fund 4 )</th>
+                <th>TotalFGNSecurities ( Fund 4 )</th>
+                <th>UnInvestedCash ( Fund 4 )</th>
+                <th>MoneyMarket ( Fund 5 )</th>
+                <th>TotalFGNSecurities ( Fund 5 )</th>
+                <th>UnInvestedCash ( Fund 5 )</th>
+                <th>TotalFGNSecurities ( Fund 6 )</th>
+                <th>UnInvestedCash ( Fun 6 )</th>
+            </tr>
+          </thead>
+          <tbody>
+        
+        </tbody>
+        </table>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+        <style>
+            table { border-collapse: collapse; }
+            tr ,thead{ display: block; float: left; }
+            th, td { display: block; border: 1px solid black; }
+            tbody{display: block;}
+            table.dataTable tbody td {padding: 10px;}
+            h1 { font-size: 1.0em;}
+        </style>
+        <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+            var investment_data = <? echo $body ?>;
+            var abc = new Request('<? $body ?>');
+            
+        jQuery(document).ready(function($){
+            console.log(investment_data);
+                $('#table-valuation').DataTable({
+                data: investment_data,
+                    columns: [
+                        // {data: 'Id'},
+                        {data: "ReportDate"},
+                        { data: 'Fund1Equities' },
+                        { data: 'Fund1InfrastructureFunds' },
+                        { data: 'Fund1MoneyMarket' },
+                        { data: 'Fund1StateGovBonds' },
+                        { data: 'Fund1TotalFGNSecurities' },
+                        { data: 'Fund1UnInvestedCash'},
+                        { data: 'Fund2CorporateBonds'},
+                        { data: 'Fund2Equities' },
+                        { data: 'Fund2InfrastructureBonds' },
+                        { data: 'Fund2InfrastructureFunds' },
+                        { data: 'Fund2MoneyMarket' },
+                        { data: 'Fund2StateGovBonds' },
+                        { data: 'Fund2TotalFGNSecurities' },
+                        { data: 'Fund2UnInvestedCash'},
+                        { data: 'Fund3CorporateBonds' },
+                        { data: 'Fund3Equities' },
+                        { data: 'Fund3InfrastructureBonds' },
+                        { data: 'Fund3MoneyMarket' },
+                        { data: 'Fund3StateGovBonds' },
+                        { data: 'Fund3TotalFGNSecurities' },
+                        { data: 'Fund3UnInvestedCash'},
+                        { data: 'Fund4CorporateBonds' },
+                        { data: 'Fund4Equities' },
+                        { data: 'Fund4MoneyMarket' },
+                        { data: 'Fund4StateGovBonds' },
+                        { data: 'Fund4TotalFGNSecurities' },
+                        { data: 'Fund4UnInvestedCash'},
+                        { data: 'Fund5MoneyMarket' },
+                        { data: 'Fund5TotalFGNSecurities' },
+                        { data: 'Fund5UnInvestedCash'},
+                        { data: 'Fund6TotalFGNSecurities' },
+                        { data: 'Fund6UnInvestedCash'}
+                    
+                    ]
+            });
+        });
+        </script>
+    <?php
+}
 
 /**
  * Register a custom menu page to view the information queried.
@@ -160,15 +281,15 @@ function best_register_custom_menu_page() {
 		16
 	);
 	
-    // //adding a submenu called API Settings
-	// add_submenu_page( 
-    //     'best', 
-    //     'api keys', 
-    //     'API Settings', 
-    //     'manage_options', 
-    //     'api_creds', 
-    //     'best_api_creds'
-    // ); 
+    //adding a submenu called API Settings
+	add_submenu_page( 
+        'investment-options', 
+        'fund valuations', 
+        'Fund Valuations', 
+        'manage_options', 
+        'fund_valuations', 
+        'get_fund_valuations'
+    ); 
 
 }
 
@@ -202,7 +323,7 @@ function norrenberger_investment_2 () {
                     <tr role="row">
                     <th>EQUITIES</th>
                     <th>INFRASTRUCTURE FUNDS</th>
-		    <th>TOTAL FGN SECURITIES</th>
+		            <th>TOTAL FGN SECURITIES</th>
                     <th>MONEY MARKET</th>
                     <th>UNINVESTED CASH</th>
                     </tr>
