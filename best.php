@@ -94,6 +94,99 @@ return $encoded_data;
 
 
 
+add_shortcode('fund_valuations', 'get_funds_valuations');
+
+function get_funds_valuations () {
+    ?>
+        <div class="" >
+        <table id="Investment_table" width="100%">
+          <thead>
+            <tr role="row">
+                <th>Report Date</th>
+                <th>Equities ( Fund 1 )</th>
+                <th>InfrastructureFunds ( Fund 1 )</th>
+                <th>MoneyMarket ( Fund 1 )</th>
+                <th>StateGovBonds ( Fund 1 )</th>
+                <th>TotalFGNSecurities ( Fund 1 )</th>
+                <th>UnInvestedCash ( Fund 1 )</th>
+                <th>CorporateBonds ( Fund 2 )</th>
+                <th>Equities ( Fund 2 )</th>
+                <th>InfrastructureBonds ( Fund 2 )</th>
+                <th>InfrastructureFunds ( Fund 2 )</th>
+                <th>MoneyMarket ( Fund 2 )</th>
+                <th>StateGovBonds ( Fund 2 )</th>
+                <th>TotalFGNSecurities ( Fund 2 )</th>
+                <th>UnInvestedCash ( Fund 2 )</th>
+                <th>CorporateBonds ( Fund 3 )</th>
+                <th>Equities ( Fund 3 )</th>
+                <th>InfrastructureBonds ( Fund 3 )</th>
+                <th>MoneyMarket ( Fund 3 )</th>
+                <th>StateGovBonds ( Fund 3 )</th>
+                <th>TotalFGNSecurities ( Fund 3 )</th>
+                <th>UnInvestedCash ( Fund 3 )</th>
+                <th>CorporateBonds ( Fund 4 )</th>
+                <th>Equities ( Fund 4 )</th>
+                <th>MoneyMarket ( Fund 4 )</th>
+                <th>StateGovBonds ( Fund 4 )</th>
+                <th>TotalFGNSecurities ( Fund 4 )</th>
+                <th>UnInvestedCash ( Fund 4 )</th>
+                <th>MoneyMarket ( Fund 5 )</th>
+                <th>TotalFGNSecurities ( Fund 5 )</th>
+                <th>UnInvestedCash ( Fund 5 )</th>
+                <th>TotalFGNSecurities ( Fund 6 )</th>
+                <th>UnInvestedCash ( Fun 6 )</th>
+            </tr>
+          </thead>
+          <tbody>
+        
+        </tbody>
+        </table>
+        </div>
+    <?php
+    // Write AJAX to show the infomation in the shortcode.
+     wp_enqueue_script( 'best-ajax-scripts', plugins_url( 'assets/js/best2-ajax.js', __FILE__ ), ['jquery'], '0.1.0', true );
+    
+}
+
+
+// Create new endpoint to provide data.
+add_action( 'rest_api_init', 'best2_rest_ajax_endpoint' );
+
+function best2_rest_ajax_endpoint() {
+    register_rest_route(
+        'best',
+        'rest-ajax',
+        [
+            'methods'             => 'GET',
+            'permission_callback' => '__return_true',
+            'callback'            => 'best2_rest_ajax_callback',
+        ]
+    );
+}
+
+
+// REST Endpoint information.
+function best2_rest_ajax_callback() {
+    $todays_date = date("Y-m-d");
+    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
+    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $args = array(
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $id_token,
+        )
+    );
+    $response = wp_remote_get( $url, $args );
+    $body     = wp_remote_retrieve_body( $response );
+    $encoded_data = json_decode($body);
+
+return $encoded_data;
+
+}
+
+
+
+
+
 /**
  * Function that initializes the plugin.
  */
@@ -297,6 +390,9 @@ function best_register_custom_menu_page() {
 add_action( 'admin_menu', 'best_register_custom_menu_page' );
 
 
+
+
+
 /**
 * Load custom CSS and JavaScript.
 */
@@ -308,67 +404,5 @@ function wpdocs_my_enqueue_scripts() : void {
     // Enqueue my scripts.
     wp_enqueue_script( 'datatables', 'https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js', ['jquery'], null, true );
      wp_localize_script( 'datatables', 'datatablesajax', array('url' => admin_url('admin-ajax.php')) );
-
-}
-
-
-
-add_shortcode('Best', 'norrenberger_investment_2');
-
-function norrenberger_investment_2 () {
-    ?>
-        <div class="" >
-            <table id="Investment_table" width="100%">
-                <thead>
-                    <tr role="row">
-                    <th>EQUITIES</th>
-                    <th>INFRASTRUCTURE FUNDS</th>
-		            <th>TOTAL FGN SECURITIES</th>
-                    <th>MONEY MARKET</th>
-                    <th>UNINVESTED CASH</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    <?php
-    // Write AJAX to show the infomation in the shortcode.
-    wp_enqueue_script( 'best2-ajax-scripts', plugins_url( 'assets/js/best2-ajax.js', __FILE__ ), ['jquery'], '0.1.0', true );
-    
-}
-
-
-// Create new endpoint to provide data.
-add_action( 'rest_api_init', 'best2_rest_ajax_endpoint' );
-
-function best2_rest_ajax_endpoint() {
-    register_rest_route(
-        'best2',
-        'rest-ajax',
-        [
-            'methods'             => 'GET',
-            'permission_callback' => '__return_true',
-            'callback'            => 'best2_rest_ajax_callback',
-        ]
-    );
-}
-
-
-// REST Endpoint information.
-function best2_rest_ajax_callback() {
-    $todays_date = date("Y-m-d");
-    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
-    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
-    $args = array(
-        'headers' => array(
-            'Authorization' => 'Bearer ' . $id_token,
-        )
-    );
-    $response = wp_remote_get( $url, $args );
-    $body     = wp_remote_retrieve_body( $response );
-    $encoded_data = json_decode($body);
-
-return $encoded_data;
 
 }
