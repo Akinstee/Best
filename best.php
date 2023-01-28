@@ -32,6 +32,139 @@ function create_block_best_block_init() {
 add_action( 'init', 'create_block_best_block_init' );
 
 
+global $norrenberger_db_version;
+$norrenberger_db_version = '1.0';
+
+//create new table upon activation of plugin
+function db_setup() {
+	global $wpdb;
+	global $norrenberger_db_version;
+
+	$table_name = $wpdb->prefix . 'investmentportfolios';
+	
+	$charset_collate = $wpdb->get_charset_collate();
+
+	$sql = "CREATE TABLE $table_name (
+		id int(11) NOT None AUTO_INCREMENT,
+		report_date datetime No None,
+		fund1_equities decimal(6,2)	 No 0.00,
+        fund1_infrastructure_funds decimal(6,2)	 No 0.00,
+        fund1_total_fgn_securities decimal(6,2)	 No 0.00,
+        fund1_state_gov_bonds decimal(6,2)	 No 0.00,
+        fund1_money_market decimal(6,2)	 No 0.00,
+        fund1_uninvested_cash decimal(6,2)	 No 0.00,
+        fund2_equities decimal(6,2)	 No 0.00,
+        fund2_infrastructure_funds decimal(6,2)	 No 0.00,
+        fund2_total_fgn_securities decimal(6,2)	 No 0.00,
+        fund2_corporate_bonds decimal(6,2)	 No 0.00,
+        fund2_infrastructure_bonds decimal(6,2)	 No 0.00,
+        fund2_state_gov_bonds decimal(6,2)	 No 0.00,
+        fund2_money_market decimal(6,2)	 No 0.00,
+        fund2_uninvested_cash decimal(6,2)	 No 0.00,
+        fund3_equities decimal(6,2)	 No 0.00,
+        fund3_corporate_bonds decimal(6,2)	 No 0.00,
+        fund3_infrastructure_bonds decimal(6,2)	 No 0.00,
+        fund3_total_fgn_securities decimal(6,2)	 No 0.00,
+        fund3_state_gov_bonds decimal(6,2)	 No 0.00,
+        fund3_money_market decimal(6,2)	 No 0.00,
+        fund3_uninvested_cash decimal(6,2)	 No 0.00,
+        fund4_equities decimal(6,2)	 No 0.00,
+        fund4_total_fgn_securities decimal(6,2)	 No 0.00,
+        fund4_corporate_bonds decimal(6,2)	 No 0.00,
+        fund4_state_gov_bonds decimal(6,2)	 No 0.00,
+        fund4_money_market decimal(6,2)	 No 0.00,
+        fund4_uninvested_cash decimal(6,2)	 No 0.00,
+        fund5_total_fgn_securities decimal(6,2)	 No 0.00,
+        fund5_money_market decimal(6,2)	 No 0.00,
+        fund5_uninvested_cash decimal(6,2)	 No 0.00,
+        fund6_money_market decimal(6,2)	 No 0.00,
+        fund6_uninvested_cash decimal(6,2)	 No 0.00,
+		created_at timestamp No CURRENT_TIMESTAMP,
+		updated_at timestamp Yes CURRENT_TIMESTAMP,
+		PRIMARY KEY  (id)
+	) $charset_collate;";
+
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+	dbDelta( $sql );
+
+	add_option( 'norrenberger_db_version', $norrenberger_db_version );
+}
+
+function db_setup_data() {
+
+    // pull data from external API
+    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
+    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $args = array(
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $id_token,
+        )
+    );
+    $response = wp_remote_get( $url, $args );
+    $body     = wp_remote_retrieve_body( $response );
+    $api_data = json_decode($body);
+     // save data to the table
+	global $wpdb;
+	
+	$welcome_name = 'Mr. WordPress';
+	$welcome_text = 'Congratulations, you just completed the installation!';
+	
+	$table_name = $wpdb->prefix . 'investmentportfolios';
+	
+	$wpdb->insert( 
+		$table_name, 
+		array( 
+            'report_date' => $api_data['report_date'], 
+            'fund1_equities' => $api_data['fund1_equities'],
+            'fund1_infrastructure_funds' => $api_data['fund1_infrastructure_funds'],
+            'fund1_total_fgn_securities' => $api_data['fund1_total_fgn_securities'],
+            'fund1_state_gov_bonds'      => $api_data['fund1_state_gov_bonds'],
+            'fund1_money_market'         => $api_data['fund1_money_market'],
+            'fund1_uninvested_cash'      => $api_data['fund1_uninvested_cash'],
+            'fund2_equities'             => $api_data['fund2_equities'],
+            'fund2_total_fgn_securities' => $api_data['fund2_total_fgn_securities'],
+            'fund2_corporate_bonds'      => $api_data['fund2_corporate_bonds'],
+            'fund2_infrastructure_bonds' => $api_data['fund2_infrastructure_bonds'],
+            'fund2_state_gov_bonds'      => $api_data['fund2_state_gov_bonds'],
+            'fund2_money_market'         => $api_data['fund2_money_market'],
+            'fund2_uninvested_cash'      => $api_data['fund2_uninvested_cash'],
+            'fund3_equities'             => $api_data['fund3_equities'],
+            'fund3_corporate_bonds'      => $api_data['fund3_corporate_bonds'],
+            'fund3_infrastructure_bonds' => $api_data['fund3_infrastructure_bonds'],
+            'fund3_total_fgn_securities' => $api_data['fund3_total_fgn_securities'],
+            'fund3_state_gov_bonds'      => $api_data['fund3_state_gov_bonds'],
+            'fund3_money_market'         => $api_data['fund3_money_market'],
+            'fund3_uninvested_cash'      => $api_data['fund3_uninvested_cash'],
+            'fund4_equities'             => $api_data['fund4_equities'],
+            'fund4_total_fgn_securities' => $api_data['fund4_total_fgn_securities'],
+            'fund4_corporate_bonds'      => $api_data['fund4_corporate_bonds'],
+            'fund4_state_gov_bonds'      => $api_data['fund4_state_gov_bonds'],
+            'fund4_money_market'         => $api_data['fund4_money_market'],
+            'fund4_uninvested_cash'      => $api_data['fund4_uninvested_cash'],
+            'fund5_total_fgn_securities' => $api_data['fund5_total_fgn_securities'],
+            'fund5_money_market'         => $api_data['fund5_money_market'],
+            'fund5_uninvested_cash'      => $api_data['fund5_uninvested_cash'],
+            'fund6_money_market'         => $api_data['fund6_money_market'],
+            'fund6_uninvested_cash'      => $api_data['fund6_uninvested_cash'],
+            'created_at'                 => $api_data['created_at'],
+            'updated_at'                 => $api_data['updated_at']
+		) 
+	);
+}
+
+private function getMaxDate()
+    {
+        global $wpdb;
+        $currentMaxDate = date("Y-m-d", strtotime("2020-10-07"));
+
+        $maxDate = $wpdb->get_col( 'report_date');
+
+        if ($maxDate != null)
+            $currentMaxDate = $maxDate;
+
+            return Date("Y-m-d", strtotime($currentMaxDate));
+    }
+
 add_shortcode('Best', 'norrenberger_fund_1');
 
 function norrenberger_fund_1 () {
