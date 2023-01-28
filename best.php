@@ -105,10 +105,6 @@ function db_setup_data() {
     $api_data = json_decode($body);
      // save data to the table
 	global $wpdb;
-	
-	$welcome_name = 'Mr. WordPress';
-	$welcome_text = 'Congratulations, you just completed the installation!';
-	
 	$table_name = $wpdb->prefix . 'investmentportfolios';
 	
 	$wpdb->insert( 
