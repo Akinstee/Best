@@ -4,7 +4,7 @@
  * Description:       This plugin helps display all the investment stocks information the on pages via shortcode.
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.1.1
+ * Version:           0.1.2
  * Author:            @Akinstee @kingdanie
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -148,7 +148,7 @@ function db_setup_data() {
 	);
 }
 
-private function getMaxDate()
+ function getMaxDate()
     {
         global $wpdb;
         $currentMaxDate = date("Y-m-d", strtotime("2020-10-07"));
