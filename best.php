@@ -148,6 +148,9 @@ function db_setup_data() {
 	);
 }
 
+register_activation_hook( __FILE__, 'db_setup' );
+register_activation_hook( __FILE__, 'db_setup_data' );
+
  function getMaxDate()
     {
         global $wpdb;
