@@ -87,14 +87,12 @@ function db_setup() {
 	add_option( 'norrenberger_db_version', $norrenberger_db_version );
 }
 
-
-//save data to custom database table
 function db_setup_data() {
 	 global $wpdb;
 	$table_name = $wpdb->prefix . 'investment_funds';
     // pull data from external API
     $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
-    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $id_token = 'nFBvloIUXW1tUS2IUQuudu62G1hA8oTt80b_hbOAakBZZMNAaaIeDZqtw726iUK-753krrbPbT8ABQlYefHbXMXgqDE9E2OnNZtH1FCl1_9kW6_azwLquTsV609YYtG481dLCLb6-yb6SBlS3Zobmab92iR8OWIKOZRND1Syezm1K_EG3k3dTg-gHUaGd4k5Ewh9zebqS1qO7MrVBqa-CzQnBQCkaQD8yON8-kRmr26x5EAbdXPBBBfgQsxoHUQ4-0hRRcTDUdlMFqcbKEVGKVkdxzGqGPulInqYYFA6uJvytRj23RaT4kZOV_elSD9OSyh_n4e3CB_hG-jR091vHn4reLXNPL5YtyQM2m7-XVu8zj1OFfOIltFSGcve0RTNtsVVwgzox3ApUZKMcNQ1vkdbsNHZJPJyRyCZkXeEnoYPpMHLwAE3CzzsalqwqRWQu9Mf6bOqz1gjsUt9bd4xRfXeIdPjVMJ2Pb2bW2rB2LeXpgtrJ_mtiZZqgwKMNc4hr8yS5wwkikzmMZSGuKzTaQ';
     $args = array(
         'headers' => array(
             'Authorization' => 'Bearer ' . $id_token,
@@ -146,6 +144,17 @@ function db_setup_data() {
 
 register_activation_hook( __FILE__, 'db_setup' );
 register_activation_hook( __FILE__, 'db_setup_data' );
+
+register_deactivation_hook( __FILE__, 'remove_investment_funds_database' );
+
+// remove investment_funds table once plugin is deactivated.
+function remove_investment_funds_database() {
+     global $wpdb;
+     $table_name = $wpdb->prefix . 'investment_funds';
+     $sql = "DROP TABLE IF EXISTS $table_name";
+     $wpdb->query($sql);
+     delete_option("norrenberger_db_version");
+} 
 
  function getMaxDate()
     {
