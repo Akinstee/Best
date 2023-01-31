@@ -40,58 +40,58 @@ function db_setup() {
 	global $wpdb;
 	global $norrenberger_db_version;
 
-	$table_name = $wpdb->prefix . 'investmentportfolios';
-	
+	$table_name = $wpdb->prefix . 'investment_funds';
 	$charset_collate = $wpdb->get_charset_collate();
 
 	$sql = "CREATE TABLE $table_name (
-		id int(11) NOT None AUTO_INCREMENT,
-		report_date datetime NOT None,
-		fund1_equities decimal(6,2)	 DEFAULT 0.00,
-        fund1_infrastructure_funds decimal(6,2)	 DEFAULT 0.00,
-        fund1_total_fgn_securities decimal(6,2)	 DEFAULT 0.00,
-        fund1_state_gov_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund1_money_market decimal(6,2)	 DEFAULT 0.00,
-        fund1_uninvested_cash decimal(6,2)	 DEFAULT 0.00,
-        fund2_equities decimal(6,2)	 DEFAULT 0.00,
-        fund2_infrastructure_funds decimal(6,2)	 DEFAULT 0.00,
-        fund2_total_fgn_securities decimal(6,2)	 DEFAULT 0.00,
-        fund2_corporate_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund2_infrastructure_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund2_state_gov_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund2_money_market decimal(6,2)	 DEFAULT 0.00,
-        fund2_uninvested_cash decimal(6,2)	 DEFAULT 0.00,
-        fund3_equities decimal(6,2)	 DEFAULT 0.00,
-        fund3_corporate_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund3_infrastructure_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund3_total_fgn_securities decimal(6,2)	 DEFAULT 0.00,
-        fund3_state_gov_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund3_money_market decimal(6,2)	 DEFAULT 0.00,
-        fund3_uninvested_cash decimal(6,2)	 DEFAULT 0.00,
-        fund4_equities decimal(6,2)	 DEFAULT 0.00,
-        fund4_total_fgn_securities decimal(6,2)	 DEFAULT 0.00,
-        fund4_corporate_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund4_state_gov_bonds decimal(6,2)	 DEFAULT 0.00,
-        fund4_money_market decimal(6,2)	 DEFAULT 0.00,
-        fund4_uninvested_cash decimal(6,2)	 DEFAULT 0.00,
-        fund5_total_fgn_securities decimal(6,2)	 DEFAULT 0.00,
-        fund5_money_market decimal(6,2)	 DEFAULT 0.00,
-        fund5_uninvested_cash decimal(6,2)	 DEFAULT 0.00,
-        fund6_money_market decimal(6,2)	 DEFAULT 0.00,
-        fund6_uninvested_cash decimal(6,2)	 DEFAULT 0.00,
+		id int(11) NOT NULL AUTO_INCREMENT,
+		report_date varchar(255) NOT NULL,
+		fund1_equities decimal(6,2)	DEFAULT 0.00,
+        fund1_infrastructure_funds decimal(6,2)	DEFAULT 0.00,
+        fund1_total_fgn_securities decimal(6,2)	DEFAULT 0.00,
+        fund1_state_gov_bonds decimal(6,2)	DEFAULT 0.00,
+        fund1_money_market decimal(6,2)	DEFAULT 0.00,
+        fund1_uninvested_cash decimal(6,2)	DEFAULT 0.00,
+        fund2_equities decimal(6,2)	DEFAULT 0.00,
+        fund2_infrastructure_funds decimal(6,2)	DEFAULT 0.00,
+        fund2_total_fgn_securities decimal(6,2)	DEFAULT 0.00,
+        fund2_corporate_bonds decimal(6,2)	DEFAULT 0.00,
+        fund2_infrastructure_bonds decimal(6,2)	DEFAULT 0.00,
+        fund2_state_gov_bonds decimal(6,2)	DEFAULT 0.00,
+        fund2_money_market decimal(6,2)	DEFAULT 0.00,
+        fund2_uninvested_cash decimal(6,2) DEFAULT 0.00,
+        fund3_equities decimal(6,2)	DEFAULT 0.00,
+        fund3_corporate_bonds decimal(6,2) DEFAULT 0.00,
+        fund3_infrastructure_bonds decimal(6,2) DEFAULT 0.00,
+        fund3_total_fgn_securities decimal(6,2) DEFAULT 0.00,
+        fund3_state_gov_bonds decimal(6,2) DEFAULT 0.00,
+        fund3_money_market decimal(6,2)	DEFAULT 0.00,
+        fund3_uninvested_cash decimal(6,2)	DEFAULT 0.00,
+        fund4_equities decimal(6,2) DEFAULT 0.00,
+        fund4_total_fgn_securities decimal(6,2) DEFAULT 0.00,
+        fund4_corporate_bonds decimal(6,2) DEFAULT 0.00,
+        fund4_state_gov_bonds decimal(6,2) DEFAULT 0.00,
+        fund4_money_market decimal(6,2)	DEFAULT 0.00,
+        fund4_uninvested_cash decimal(6,2) DEFAULT 0.00,
+        fund5_total_fgn_securities decimal(6,2) DEFAULT 0.00,
+        fund5_money_market decimal(6,2) DEFAULT 0.00,
+        fund5_uninvested_cash decimal(6,2) DEFAULT 0.00,
+        fund6_total_fgn_securities decimal(6,2) DEFAULT 0.00,
+        fund6_uninvested_cash decimal(6,2)	DEFAULT 0.00,
 		created_at timestamp DEFAULT CURRENT_TIMESTAMP,
 		updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
-		PRIMARY KEY  (id)
+		PRIMARY KEY (id)
 	) $charset_collate;";
-
 	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	dbDelta( $sql );
-
 	add_option( 'norrenberger_db_version', $norrenberger_db_version );
 }
 
-function db_setup_data() {
 
+//save data to custom database table
+function db_setup_data() {
+	 global $wpdb;
+	$table_name = $wpdb->prefix . 'investment_funds';
     // pull data from external API
     $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
     $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
@@ -102,50 +102,46 @@ function db_setup_data() {
     );
     $response = wp_remote_get( $url, $args );
     $body     = wp_remote_retrieve_body( $response );
-    $api_data = json_decode($body);
-     // save data to the table
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'investmentportfolios';
-	
-	$wpdb->insert( 
+    $api_adata = json_decode($body, true);
+	foreach($api_adata as $api_data ){
+		$wpdb->insert( 
 		$table_name, 
 		array( 
-            'report_date' => $api_data['report_date'], 
-            'fund1_equities' => $api_data['fund1_equities'],
-            'fund1_infrastructure_funds' => $api_data['fund1_infrastructure_funds'],
-            'fund1_total_fgn_securities' => $api_data['fund1_total_fgn_securities'],
-            'fund1_state_gov_bonds'      => $api_data['fund1_state_gov_bonds'],
-            'fund1_money_market'         => $api_data['fund1_money_market'],
-            'fund1_uninvested_cash'      => $api_data['fund1_uninvested_cash'],
-            'fund2_equities'             => $api_data['fund2_equities'],
-            'fund2_total_fgn_securities' => $api_data['fund2_total_fgn_securities'],
-            'fund2_corporate_bonds'      => $api_data['fund2_corporate_bonds'],
-            'fund2_infrastructure_bonds' => $api_data['fund2_infrastructure_bonds'],
-            'fund2_state_gov_bonds'      => $api_data['fund2_state_gov_bonds'],
-            'fund2_money_market'         => $api_data['fund2_money_market'],
-            'fund2_uninvested_cash'      => $api_data['fund2_uninvested_cash'],
-            'fund3_equities'             => $api_data['fund3_equities'],
-            'fund3_corporate_bonds'      => $api_data['fund3_corporate_bonds'],
-            'fund3_infrastructure_bonds' => $api_data['fund3_infrastructure_bonds'],
-            'fund3_total_fgn_securities' => $api_data['fund3_total_fgn_securities'],
-            'fund3_state_gov_bonds'      => $api_data['fund3_state_gov_bonds'],
-            'fund3_money_market'         => $api_data['fund3_money_market'],
-            'fund3_uninvested_cash'      => $api_data['fund3_uninvested_cash'],
-            'fund4_equities'             => $api_data['fund4_equities'],
-            'fund4_total_fgn_securities' => $api_data['fund4_total_fgn_securities'],
-            'fund4_corporate_bonds'      => $api_data['fund4_corporate_bonds'],
-            'fund4_state_gov_bonds'      => $api_data['fund4_state_gov_bonds'],
-            'fund4_money_market'         => $api_data['fund4_money_market'],
-            'fund4_uninvested_cash'      => $api_data['fund4_uninvested_cash'],
-            'fund5_total_fgn_securities' => $api_data['fund5_total_fgn_securities'],
-            'fund5_money_market'         => $api_data['fund5_money_market'],
-            'fund5_uninvested_cash'      => $api_data['fund5_uninvested_cash'],
-            'fund6_money_market'         => $api_data['fund6_money_market'],
-            'fund6_uninvested_cash'      => $api_data['fund6_uninvested_cash'],
-            'created_at'                 => $api_data['created_at'],
-            'updated_at'                 => $api_data['updated_at']
-		) 
-	);
+            'report_date' => $api_data['ReportDate'], 
+            'fund1_equities' => $api_data['Fund1Equities'],
+            'fund1_infrastructure_funds' => $api_data['Fund1InfrastructureFunds'],
+            'fund1_total_fgn_securities' => $api_data['Fund1TotalFGNSecurities'],
+            'fund1_state_gov_bonds'      => $api_data['Fund1StateGovBonds'],
+            'fund1_money_market'         => $api_data['Fund1MoneyMarket'],
+            'fund1_uninvested_cash'      => $api_data['Fund1UnInvestedCash'],
+            'fund2_equities'             => $api_data['Fund2Equities'],
+            'fund2_total_fgn_securities' => $api_data['Fund2TotalFGNSecurities'],
+            'fund2_corporate_bonds'      => $api_data['Fund2CorporateBonds'],
+            'fund2_infrastructure_bonds' => $api_data['Fund2InfrastructureBonds'],
+            'fund2_state_gov_bonds'      => $api_data['Fund2StateGovBonds'],
+            'fund2_money_market'         => $api_data['Fund2MoneyMarket'],
+            'fund2_uninvested_cash'      => $api_data['Fund2UnInvestedCash'],
+            'fund3_equities'             => $api_data['Fund3Equities'],
+            'fund3_corporate_bonds'      => $api_data['Fund3CorporateBonds'],
+            'fund3_infrastructure_bonds' => $api_data['Fund3InfrastructureBonds'],
+            'fund3_total_fgn_securities' => $api_data['Fund3TotalFGNSecurities'],
+            'fund3_state_gov_bonds'      => $api_data['Fund3StateGovBonds'],
+            'fund3_money_market'         => $api_data['Fund3MoneyMarket'],
+            'fund3_uninvested_cash'      => $api_data['Fund3UnInvestedCash'],
+            'fund4_equities'             => $api_data['Fund4Equities'],
+            'fund4_total_fgn_securities' => $api_data['Fund4TotalFGNSecurities'],
+            'fund4_corporate_bonds'      => $api_data['Fund4CorporateBonds'],
+            'fund4_state_gov_bonds'      => $api_data['Fund4StateGovBonds'],
+            'fund4_money_market'         => $api_data['Fund4MoneyMarket'],
+            'fund4_uninvested_cash'      => $api_data['Fund4UnInvestedCash'],
+            'fund5_total_fgn_securities' => $api_data['Fund5TotalFGNSecurities'],
+            'fund5_money_market'         => $api_data['Fund5MoneyMarket'],
+            'fund5_uninvested_cash'      => $api_data['Fund5UnInvestedCash'],
+            'fund6_total_fgn_securities' => $api_data['Fund6TotalFGNSecurities'],
+            'fund6_uninvested_cash'      => $api_data['Fund6UnInvestedCash']
+		)
+	);   
+	}
 }
 
 register_activation_hook( __FILE__, 'db_setup' );
@@ -204,6 +200,23 @@ function best_rest_ajax_endpoint() {
     );
 }
 
+// REST Endpoint information.
+// function fetch_investment_valuations() {
+//     $todays_date = date("Y-m-d");
+//     $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-21&fundId=73';
+//     $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+//     $args = array(
+//         'headers' => array(
+//             'Authorization' => 'Bearer ' . $id_token,
+//         )
+//     );
+//     $response = wp_remote_get( $url, $args );
+//     $body     = wp_remote_retrieve_body( $response );
+//     // $encoded_data = json_decode($body);
+//     $encoded_data = $body;
+
+// return $encoded_data;
+// }
 
 // REST Endpoint information.
 function best_rest_ajax_callback() {
@@ -386,6 +399,7 @@ function get_fund_valuations() {
     );
     $response = wp_remote_get( $url, $args );
     $body     = wp_remote_retrieve_body( $response );
+	// var_dump(json_decode($body, true));
     $t_date = date("Y-m-d");
 	?>
         <h1 style="padding: 10px">All Investment Funds Valuation <?php echo "(" .  $t_date . ")"  ?><h1>
