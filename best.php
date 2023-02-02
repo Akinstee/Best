@@ -231,7 +231,7 @@ function best_rest_ajax_endpoint() {
 function best_rest_ajax_callback() {
     $todays_date = date("Y-m-d");
     $url = 'http://ffpro.norrenberger.com/WebResourcesAPI/api/GetFundPrices?lastUpdatedDate=2022-10-21&fundId=73';
-    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $id_token = 't1QACVn2imq1e0OJWfHA6hiL9sU5-Ow0jK91Lh4VuQr6O5ML-F5OEd7xyPlLTtb5jdTok27pTI9L6A9h5GUAt2CLf4hkFLUBEzkcTmg88lWPzfhQ4zsdPbVyNP16zOiZMHrsfEKtjj5ji0Rg-Lq9wJSs8TsMIUmKUPvdnMUHlo_kRA74l3kz0Q2z5MiDo1XVaJliSY55IYxj5GSifDGCmnJ1ILRbIH6N8ac5jIN-zgoQ-vsZJGmoVoXV4OTFy_ALkcxUwpVMNXOJJxGQ4irFSZh4MWXz14wlRRYggyOWdh9Jc26zfMwN30n6IjwXTg9vSqmDagM0yp5e5sVqa-w12vo4zwvD6f6GF7iQR9q704gbZHA64lrBjWGgYddJSmz287q6fFdCAGGc3M2dLrn0tRBggvsOz7hSlg8vaT3B-vCjGomnX-r8mvhHQ1p6qMJBOBJmildLyq5XYBsJZBoyaOj4yNgek0VK_w-4wHWGiD81KFI_7NW2hjHrcUyR_UXNo5zSWuocdrIVxPOrBB0B3g';
     $args = array(
         'headers' => array(
             'Authorization' => 'Bearer ' . $id_token,
@@ -323,7 +323,7 @@ function best2_rest_ajax_endpoint() {
 function best2_rest_ajax_callback() {
     $todays_date = date("Y-m-d");
     $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-21&fundId=73';
-    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $id_token = 't1QACVn2imq1e0OJWfHA6hiL9sU5-Ow0jK91Lh4VuQr6O5ML-F5OEd7xyPlLTtb5jdTok27pTI9L6A9h5GUAt2CLf4hkFLUBEzkcTmg88lWPzfhQ4zsdPbVyNP16zOiZMHrsfEKtjj5ji0Rg-Lq9wJSs8TsMIUmKUPvdnMUHlo_kRA74l3kz0Q2z5MiDo1XVaJliSY55IYxj5GSifDGCmnJ1ILRbIH6N8ac5jIN-zgoQ-vsZJGmoVoXV4OTFy_ALkcxUwpVMNXOJJxGQ4irFSZh4MWXz14wlRRYggyOWdh9Jc26zfMwN30n6IjwXTg9vSqmDagM0yp5e5sVqa-w12vo4zwvD6f6GF7iQR9q704gbZHA64lrBjWGgYddJSmz287q6fFdCAGGc3M2dLrn0tRBggvsOz7hSlg8vaT3B-vCjGomnX-r8mvhHQ1p6qMJBOBJmildLyq5XYBsJZBoyaOj4yNgek0VK_w-4wHWGiD81KFI_7NW2hjHrcUyR_UXNo5zSWuocdrIVxPOrBB0B3g';
     $args = array(
         'headers' => array(
             'Authorization' => 'Bearer ' . $id_token,
@@ -346,7 +346,7 @@ return $encoded_data;
  */
 function best_get_stocks_data() { 
     $url = 'http://ffpro.norrenberger.com/WebResourcesAPI/api/GetFundPrices?lastUpdatedDate=2022-10-21&fundId=73';
-    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $id_token = 't1QACVn2imq1e0OJWfHA6hiL9sU5-Ow0jK91Lh4VuQr6O5ML-F5OEd7xyPlLTtb5jdTok27pTI9L6A9h5GUAt2CLf4hkFLUBEzkcTmg88lWPzfhQ4zsdPbVyNP16zOiZMHrsfEKtjj5ji0Rg-Lq9wJSs8TsMIUmKUPvdnMUHlo_kRA74l3kz0Q2z5MiDo1XVaJliSY55IYxj5GSifDGCmnJ1ILRbIH6N8ac5jIN-zgoQ-vsZJGmoVoXV4OTFy_ALkcxUwpVMNXOJJxGQ4irFSZh4MWXz14wlRRYggyOWdh9Jc26zfMwN30n6IjwXTg9vSqmDagM0yp5e5sVqa-w12vo4zwvD6f6GF7iQR9q704gbZHA64lrBjWGgYddJSmz287q6fFdCAGGc3M2dLrn0tRBggvsOz7hSlg8vaT3B-vCjGomnX-r8mvhHQ1p6qMJBOBJmildLyq5XYBsJZBoyaOj4yNgek0VK_w-4wHWGiD81KFI_7NW2hjHrcUyR_UXNo5zSWuocdrIVxPOrBB0B3g';
     $args = array(
         'headers' => array(
             'Authorization' => 'Bearer ' . $id_token,
@@ -400,7 +400,7 @@ function best_get_stocks_data() {
 
 function get_fund_valuations() { 
     $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
-    $id_token = '0yMfJUVun5dcWFp0Q4hAecWzNsveBlFAGSE8kds5ylJE_mPoc50oU2lQqNXN1c2jxc1Wyv02Gd4BxIJgLow_QhSaT8W1_7POsxpvDCsV59_evualPwPH0bHd5KgTzUuVpMqP7PuSymGfeoULmYu4rTMjs94LhnipEoUIECCmaFZLg9YTMwmhPuPNYJ5RTnBhEClMOg17LKn2q07Tqi970cGM-q-IUOodqGcVykd7wlh4jCqjnh83FLm_U-YJ4ySlqffL22rewahPBH8aHJw2Upkrq9OVEPtZegLar-b-jXZG9ctfDDsKahMip1hCpJVPthxVE3gl74v-IjXGn4x7cYdp7YFYaw_C-PoqO3yqmtKpRJHunU-h1RSGVqPlzBVpDiI153qGhXHGdv1jU8bUS523qMd3xXuqwkTjFN-oxHOtcPWZMGcImDn5fj6eIzb3vozV8JYZlfEK0okofxfCxoBdaAUXOspiPFuWxAi8cAEe7wUAqiTNidmVOa_Fw3_4';
+    $id_token = 't1QACVn2imq1e0OJWfHA6hiL9sU5-Ow0jK91Lh4VuQr6O5ML-F5OEd7xyPlLTtb5jdTok27pTI9L6A9h5GUAt2CLf4hkFLUBEzkcTmg88lWPzfhQ4zsdPbVyNP16zOiZMHrsfEKtjj5ji0Rg-Lq9wJSs8TsMIUmKUPvdnMUHlo_kRA74l3kz0Q2z5MiDo1XVaJliSY55IYxj5GSifDGCmnJ1ILRbIH6N8ac5jIN-zgoQ-vsZJGmoVoXV4OTFy_ALkcxUwpVMNXOJJxGQ4irFSZh4MWXz14wlRRYggyOWdh9Jc26zfMwN30n6IjwXTg9vSqmDagM0yp5e5sVqa-w12vo4zwvD6f6GF7iQR9q704gbZHA64lrBjWGgYddJSmz287q6fFdCAGGc3M2dLrn0tRBggvsOz7hSlg8vaT3B-vCjGomnX-r8mvhHQ1p6qMJBOBJmildLyq5XYBsJZBoyaOj4yNgek0VK_w-4wHWGiD81KFI_7NW2hjHrcUyR_UXNo5zSWuocdrIVxPOrBB0B3g';
     $args = array(
         'headers' => array(
             'Authorization' => 'Bearer ' . $id_token,
