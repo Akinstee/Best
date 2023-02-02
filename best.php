@@ -4,7 +4,7 @@
  * Description:       This plugin helps display all the investment stocks information the on pages via shortcode.
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.1.2
+ * Version:           0.1.3
  * Author:            @Akinstee @kingdanie
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -91,7 +91,7 @@ function db_setup_data() {
 	 global $wpdb;
 	$table_name = $wpdb->prefix . 'investment_funds';
     // pull data from external API
-    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2022-10-22&fundId=73';
+    $url = 'http://ffpro.ieianchorpensions.com.ng/WebResourcesAPI/api/GetInvestmentFundValuations?lastUpdatedDate=2023-01-22&fundId=73';
     $id_token = 'nFBvloIUXW1tUS2IUQuudu62G1hA8oTt80b_hbOAakBZZMNAaaIeDZqtw726iUK-753krrbPbT8ABQlYefHbXMXgqDE9E2OnNZtH1FCl1_9kW6_azwLquTsV609YYtG481dLCLb6-yb6SBlS3Zobmab92iR8OWIKOZRND1Syezm1K_EG3k3dTg-gHUaGd4k5Ewh9zebqS1qO7MrVBqa-CzQnBQCkaQD8yON8-kRmr26x5EAbdXPBBBfgQsxoHUQ4-0hRRcTDUdlMFqcbKEVGKVkdxzGqGPulInqYYFA6uJvytRj23RaT4kZOV_elSD9OSyh_n4e3CB_hG-jR091vHn4reLXNPL5YtyQM2m7-XVu8zj1OFfOIltFSGcve0RTNtsVVwgzox3ApUZKMcNQ1vkdbsNHZJPJyRyCZkXeEnoYPpMHLwAE3CzzsalqwqRWQu9Mf6bOqz1gjsUt9bd4xRfXeIdPjVMJ2Pb2bW2rB2LeXpgtrJ_mtiZZqgwKMNc4hr8yS5wwkikzmMZSGuKzTaQ';
     $args = array(
         'headers' => array(
@@ -252,71 +252,251 @@ add_shortcode('fund_valuations', 'get_funds_valuations');
 
 function get_funds_valuations () {
     ?>
-        <div class="" >
-        <table id="Investment_table" width="100%">
-          <thead>
-            <tr role="row">
-                <th>Report Date</th>
-                <th>Equities ( Fund 1 )</th>
-                <th>InfrastructureFunds ( Fund 1 )</th>
-                <th>MoneyMarket ( Fund 1 )</th>
-                <th>StateGovBonds ( Fund 1 )</th>
-                <th>TotalFGNSecurities ( Fund 1 )</th>
-                <th>UnInvestedCash ( Fund 1 )</th>
-                <th>CorporateBonds ( Fund 2 )</th>
-                <th>Equities ( Fund 2 )</th>
-                <th>InfrastructureBonds ( Fund 2 )</th>
-                <th>InfrastructureFunds ( Fund 2 )</th>
-                <th>MoneyMarket ( Fund 2 )</th>
-                <th>StateGovBonds ( Fund 2 )</th>
-                <th>TotalFGNSecurities ( Fund 2 )</th>
-                <th>UnInvestedCash ( Fund 2 )</th>
-                <th>CorporateBonds ( Fund 3 )</th>
-                <th>Equities ( Fund 3 )</th>
-                <th>InfrastructureBonds ( Fund 3 )</th>
-                <th>MoneyMarket ( Fund 3 )</th>
-                <th>StateGovBonds ( Fund 3 )</th>
-                <th>TotalFGNSecurities ( Fund 3 )</th>
-                <th>UnInvestedCash ( Fund 3 )</th>
-                <th>CorporateBonds ( Fund 4 )</th>
-                <th>Equities ( Fund 4 )</th>
-                <th>MoneyMarket ( Fund 4 )</th>
-                <th>StateGovBonds ( Fund 4 )</th>
-                <th>TotalFGNSecurities ( Fund 4 )</th>
-                <th>UnInvestedCash ( Fund 4 )</th>
-                <th>MoneyMarket ( Fund 5 )</th>
-                <th>TotalFGNSecurities ( Fund 5 )</th>
-                <th>UnInvestedCash ( Fund 5 )</th>
-                <th>TotalFGNSecurities ( Fund 6 )</th>
-                <th>UnInvestedCash ( Fun 6 )</th>
-            </tr>
-          </thead>
-          <tbody>
-        
-        </tbody>
-        </table>
-        </div>
-    <?php
-    // Write AJAX to show the infomation in the shortcode.
-     wp_enqueue_script( 'best-ajax-scripts', plugins_url( 'assets/js/best2-ajax.js', __FILE__ ), ['jquery'], '0.1.0', true );
-    
+				<?php 
+				   global $wpdb;
+					$table_name = $wpdb->prefix . 'investment_funds';
+				   $results = $wpdb->get_results ( "SELECT * FROM $table_name ORDER BY report_date DESC" );
+					//var_dump($results);	   
+				?>
+	<div>
+		<h4>Daily Units</h4>
+		<table id="table-fund1" width="100%" style="font-size: 12px">
+			<tbody>
+			  <tr style="background: #000; color: #fff">
+					<th>Asset Classes</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->report_date ?></td>
+					<?php endforeach; ?>
+				</tr>
+				<tr>
+					<th>Equities</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund1_equities ?></td>
+					<?php endforeach; ?>
+				</tr>
+				<tr style="background: #ededed;">
+					<th>Infrastructure Funds</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund1_infrastructure_funds ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr>
+					<th>Total FGN Securities</th>
+					<?php foreach ($results as $row) : ?>
+					   <td><?= $row->fund1_total_fgn_securities ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr style="background: #ededed;">
+					<th>State Gov Bonds</th>
+					<?php foreach ($results as $row) : ?>
+					   <td><?= $row->fund1_state_gov_bonds ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr>
+					<th>Money Market</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund1_money_market ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr style="background: #ededed;">
+					<th>Uninvested Cash</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund1_uninvested_cash ?></td>
+					<?php endforeach; ?>
+				</tr>
+					<tr>
+					<th>Total</th>
+					<?php foreach ($results as $row) : ?>
+						<td>100%</td>
+					<?php endforeach; ?>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<h4>Daily Units</h4>
+		<table id="table-fund2" width="100%" style="font-size: 12px">
+			<tbody>
+			  <tr style="background: #000; color: #fff">
+					<th>Asset Classes</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->report_date ?></td>
+					<?php endforeach; ?>
+				</tr>
+				<tr>
+					<th>Equities</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund2_equities ?></td>
+					<?php endforeach; ?>
+				</tr>
+				<tr style="background: #ededed;">
+					<th>Corporate Bonds</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund2_corporate_bonds ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr>
+					<th>Total FGN Securities</th>
+					<?php foreach ($results as $row) : ?>
+					   <td><?= $row->fund2_total_fgn_securities ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr style="background: #ededed;">
+					<th>State Gov Bonds</th>
+					<?php foreach ($results as $row) : ?>
+					   <td><?= $row->fund2_state_gov_bonds ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr>
+					<th>Money Market</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund2_money_market ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr style="background: #ededed;">
+					<th>Uninvested Cash</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund2_uninvested_cash ?></td>
+					<?php endforeach; ?>
+				</tr>
+					<tr>
+					<th>Total</th>
+					<?php foreach ($results as $row) : ?>
+						<td>100%</td>
+					<?php endforeach; ?>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+<div>
+		<h4>Daily Units</h4>
+		<table id="table-fund3" width="100%" style="font-size: 12px">
+			<tbody>
+			  <tr style="background: #000; color: #fff">
+					<th>Asset Classes</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->report_date ?></td>
+					<?php endforeach; ?>
+				</tr>
+				<tr>
+					<th>Equities</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund3_equities ?></td>
+					<?php endforeach; ?>
+				</tr>
+				<tr style="background: #ededed;">
+					<th>Corporate Bonds</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund3_corporate_bonds ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr>
+					<th>Total FGN Securities</th>
+					<?php foreach ($results as $row) : ?>
+					   <td><?= $row->fund3_total_fgn_securities ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr style="background: #ededed;">
+					<th>State Gov Bonds</th>
+					<?php foreach ($results as $row) : ?>
+					   <td><?= $row->fund3_state_gov_bonds ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr>
+					<th>Money Market</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund3_money_market ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr style="background: #ededed;">
+					<th>Uninvested Cash</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund3_uninvested_cash ?></td>
+					<?php endforeach; ?>
+				</tr>
+					<tr>
+					<th>Total</th>
+					<?php foreach ($results as $row) : ?>
+						<td>100%</td>
+					<?php endforeach; ?>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div>
+		<h4>Fund 4</h4>
+		<table id="table-fund3" width="100%" style="font-size: 12px">
+			<tbody>
+			  <tr style="background: #000; color: #fff">
+					<th>Asset Classes</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= date('Y-m-d', strtotime(substr($row->report_date, 0,10))) ?></td>
+					<?php endforeach; ?>
+				</tr>
+				<tr>
+					<th>Equities</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund4_equities ?></td>
+					<?php endforeach; ?>
+				</tr>
+				<tr style="background: #ededed;">
+					<th>Corporate Bonds</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund4_corporate_bonds ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr>
+					<th>Total FGN Securities</th>
+					<?php foreach ($results as $row) : ?>
+					   <td><?= $row->fund4_total_fgn_securities ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr style="background: #ededed;">
+					<th>State Gov Bonds</th>
+					<?php foreach ($results as $row) : ?>
+					   <td><?= $row->fund4_state_gov_bonds ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr>
+					<th>Money Market</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund4_money_market ?></td>
+					<?php endforeach; ?>
+				</tr>	
+				<tr style="background: #ededed;">
+					<th>Uninvested Cash</th>
+					<?php foreach ($results as $row) : ?>
+						<td><?= $row->fund4_uninvested_cash ?></td>
+					<?php endforeach; ?>
+				</tr>
+					<tr>
+					<th>Total</th>
+					<?php foreach ($results as $row) : ?>
+						<td>100%</td>
+					<?php endforeach; ?>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+    <?php  
 }
 
 
 // Create new endpoint to provide data.
-add_action( 'rest_api_init', 'best2_rest_ajax_endpoint' );
+// add_action( 'rest_api_init', 'best2_rest_ajax_endpoint' );
 
-function best2_rest_ajax_endpoint() {
-    register_rest_route(
-        'best',
-        'rest-ajax',
-        [
-            'methods'             => 'GET',
-            'permission_callback' => '__return_true',
-            'callback'            => 'best2_rest_ajax_callback',
-        ]
-    );
-}
+// function best2_rest_ajax_endpoint() {
+//     register_rest_route(
+//         'best',
+//         'rest-ajax',
+//         [
+//             'methods'             => 'GET',
+//             'permission_callback' => '__return_true',
+//             'callback'            => 'best2_rest_ajax_callback',
+//         ]
+//     );
+// }
 
 
 // REST Endpoint information.
